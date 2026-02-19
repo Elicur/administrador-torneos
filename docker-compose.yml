@@ -17,6 +17,7 @@ services:
     container_name: torneos_api
     environment:
       ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://0.0.0.0:8000
       ConnectionStrings__DefaultConnection: Host=db;Port=5432;Database=torneos;Username=torneos_user;Password=torneos_pass
       DOTNET_USE_POLLING_FILE_WATCHER: "1"
     volumes:

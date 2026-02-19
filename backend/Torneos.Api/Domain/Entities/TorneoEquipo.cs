@@ -1,4 +1,4 @@
-namespace Domain.Entities;
+namespace Torneos.Api.Domain.Entities;
 
 public class TorneoEquipo
 {

@@ -1,4 +1,4 @@
-using Domain.Entities;
+using Torneos.Api.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

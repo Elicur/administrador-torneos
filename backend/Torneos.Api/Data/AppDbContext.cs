@@ -1,4 +1,4 @@
-using Domain.Entities;
+using Torneos.Api.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Torneos.Api.Data;
