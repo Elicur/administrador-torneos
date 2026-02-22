@@ -15,6 +15,7 @@ public class TorneosService : ITorneosService
         _db = db;
     }
 
+    // Crear torneo
     public async Task<TorneoListDto> CreateAsync(TorneoCreateDto dto, CancellationToken ct = default)
     {
         var nombre = (dto.Nombre ?? "").Trim();
@@ -22,10 +23,17 @@ public class TorneosService : ITorneosService
         if (string.IsNullOrWhiteSpace(nombre))
             throw new ArgumentException("El nombre del torneo es obligatorio.");
 
+        if (dto.CantidadRuedas < 1)
+            throw new ArgumentException("La cantidad de ruedas debe ser al menos 1.");
 
         var entity = new Torneo
         {
-            Nombre = nombre
+            Nombre = nombre,
+            CantidadRuedas = dto.CantidadRuedas,
+            Tipo = dto.Tipo,
+            PuntosVictoria = dto.PuntosVictoria,
+            PuntosEmpate = dto.PuntosEmpate,
+            PuntosDerrota = dto.PuntosDerrota
         };
 
         _db.Torneos.Add(entity);
@@ -34,7 +42,12 @@ public class TorneosService : ITorneosService
         return new TorneoListDto
         {
             Id = entity.Id,
-            Nombre = entity.Nombre
+            Nombre = entity.Nombre,
+            CantidadRuedas = entity.CantidadRuedas,
+            Tipo = entity.Tipo,
+            PuntosVictoria = entity.PuntosVictoria,
+            PuntosEmpate = entity.PuntosEmpate,
+            PuntosDerrota = entity.PuntosDerrota
         };
     }
 
@@ -47,6 +60,11 @@ public class TorneosService : ITorneosService
             {
                 Id = t.Id,
                 Nombre = t.Nombre,
+                CantidadRuedas = t.CantidadRuedas,
+                Tipo = t.Tipo,
+                PuntosVictoria = t.PuntosVictoria,
+                PuntosEmpate = t.PuntosEmpate,
+                PuntosDerrota = t.PuntosDerrota,
                 CantidadEquipos = _db.TorneosEquipos.Count(te => te.TorneoId == t.Id)
             })
             .OrderBy(t => t.Nombre)

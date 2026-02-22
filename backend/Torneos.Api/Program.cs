@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Torneos.Api.Data;
 using Torneos.Api.Services.Equipos;
 using Torneos.Api.Services.Torneos;
+using Torneos.Api.Services.Fixtures;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Services
 builder.Services.AddScoped<IEquiposService, EquiposService>();
 builder.Services.AddScoped<ITorneosService, TorneosService>();
+builder.Services.AddScoped<IFixtureService, FixtureService>();
 
 var app = builder.Build();
 

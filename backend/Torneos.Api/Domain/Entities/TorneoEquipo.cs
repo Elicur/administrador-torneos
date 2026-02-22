@@ -9,5 +9,7 @@ public class TorneoEquipo
     public long EquipoId { get; set; }
     public Equipo Equipo { get; set; } = null!;
 
+    public string? Grupo { get; set; } // "A", "B"... null si no aplica (liga)
+
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
 }

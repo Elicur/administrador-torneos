@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Torneos.Api.DTOs.Torneos;
 using Torneos.Api.DTOs.Equipos;
 using Torneos.Api.Services.Torneos;
+using Torneos.Api.Services.Fixtures;
 
 namespace Torneos.Api.Controllers;
 
@@ -10,10 +11,12 @@ namespace Torneos.Api.Controllers;
 public class TorneosController : ControllerBase
 {
     private readonly ITorneosService _service;
+    private readonly IFixtureService _fixtureService;
 
-    public TorneosController(ITorneosService service)
+    public TorneosController(ITorneosService service, IFixtureService fixtureService)
     {
         _service = service;
+        _fixtureService = fixtureService;
     }
 
     // GET api/torneos
@@ -80,5 +83,21 @@ public class TorneosController : ControllerBase
         {
             return NotFound(new { message = ex.Message });
         }
+    }
+
+    // POST api/torneos/{torneoId}/fixture/liga
+    [HttpPost("{torneoId:long}/fixture/liga")]
+    public async Task<ActionResult> GenerarFixtureLiga(long torneoId, CancellationToken ct)
+    {
+        await _fixtureService.GenerarLigaAsync(torneoId, ct);
+        return NoContent();
+    }
+
+    // GET api/torneos/{torneoId}/fixture
+    [HttpGet("{torneoId:long}/fixture")]
+    public async Task<ActionResult<List<RondaFixtureDto>>> GetFixture(long torneoId, CancellationToken ct)
+    {
+        var fixture = await _fixtureService.GetFixtureAsync(torneoId, ct);
+        return Ok(fixture);
     }
 }

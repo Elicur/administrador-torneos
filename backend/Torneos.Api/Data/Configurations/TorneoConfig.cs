@@ -17,6 +17,10 @@ public class TorneoConfig : IEntityTypeConfiguration<Torneo>
             .HasMaxLength(120)
             .IsRequired();
 
+        b.Property(x => x.CantidadRuedas)
+            .IsRequired()
+            .HasDefaultValue(1);
+
         b.HasIndex(x => x.Nombre);
     }
 }

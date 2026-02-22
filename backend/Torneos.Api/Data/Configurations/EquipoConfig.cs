@@ -18,6 +18,12 @@ public class EquipoConfig : IEntityTypeConfiguration<Equipo>
 
         b.HasIndex(x => x.Nombre);
 
+        // Relación con TorneosEquipos (opcional pero ordena el modelo)
+        b.HasMany(e => e.TorneosEquipos)
+            .WithOne(te => te.Equipo)
+            .HasForeignKey(te => te.EquipoId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         // Navegaciones de partidos: restrict para evitar cascadas conflictivas
         b.HasMany(x => x.PartidosComoLocal)
             .WithOne(p => p.LocalEquipo)

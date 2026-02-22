@@ -12,6 +12,11 @@ public class TorneoEquipoConfig : IEntityTypeConfiguration<TorneoEquipo>
 
         b.HasKey(x => new { x.TorneoId, x.EquipoId });
 
+        // Grupo por letras (null cuando es liga)
+        b.Property(x => x.Grupo)
+            .HasMaxLength(2)   // "A" .. "Z" (o "AA" si un día crece)
+            .IsUnicode(false); // opcional
+
         b.HasOne(x => x.Torneo)
             .WithMany(t => t.TorneosEquipos)
             .HasForeignKey(x => x.TorneoId)
@@ -20,7 +25,7 @@ public class TorneoEquipoConfig : IEntityTypeConfiguration<TorneoEquipo>
         b.HasOne(x => x.Equipo)
             .WithMany(e => e.TorneosEquipos)
             .HasForeignKey(x => x.EquipoId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
 
         b.HasIndex(x => x.EquipoId);
         b.HasIndex(x => x.TorneoId);
